@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class ProductsController extends Controller
 {
+
+    public function __construct()
+    {
+      $this->middleware('auth',['except' => ['index','show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //Muestra una coleccion de productos
+        $products = Product::paginate(12);
+        return view('products.index', ['products' => $products]);
     }
 
     /**
@@ -24,7 +32,8 @@ class ProductsController extends Controller
     public function create()
     {
         // Mostramos un formulario para crear productos
-        return view('products.create');
+        $product = new Product;
+        return view('products.create', ["product" => $product]);
     }
 
     /**
@@ -35,7 +44,17 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        var_dump($request);
+        $options = [
+          'title' => $request->title,
+          'description' => $request->description,
+          'price' => $request->price
+        ];
+
+        if(Product::create($options)){
+          return redirect('/productos');
+        }else{
+          return view('products.create');
+        }
     }
 
     /**
@@ -46,7 +65,9 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //Muestra un solo recurso
+        $product = Product::find($id);
+
+        return view('products.show',['product' => $product]);
     }
 
     /**
@@ -57,7 +78,8 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //Formulario para editar un recurso en especifico
+        $product = Product::find($id);
+        return view("products.edit",["product" => $product]);
     }
 
     /**
@@ -69,7 +91,16 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->title = $request->title;
+        $product->price = $request->price;
+        $product->description = $request->description;
+
+        if($product->save()){
+          return redirect('/productos');
+        }else{
+          return view("products.edit",["product" => $product]);
+        }
     }
 
     /**
@@ -80,6 +111,7 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::destroy($id);
+        return redirect('/productos');
     }
 }
