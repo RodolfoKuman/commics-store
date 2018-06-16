@@ -14001,10 +14001,9 @@ window.Vue = __webpack_require__(37);
  */
 
 Vue.component('example-component', __webpack_require__(40));
-
 Vue.component('products-component', __webpack_require__(43));
-
 Vue.component('product-card-component', __webpack_require__(46));
+Vue.component('material-transition-group', __webpack_require__(54));
 
 var app = new Vue({
   el: '#app'
@@ -47464,6 +47463,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(response.data.data);
         _this.products = response.data.data;
       });
+    },
+    beforeEnter: function beforeEnter(el) {
+      el.style.opacity = 0;
+      el.style.transform = "scale(0)";
+      el.style.transition = "all 0.5s cubic-bezier(0.4,0.0,0.2, 1)";
+    },
+    enter: function enter(el) {
+      var delay = 150 * el.dataset.index;
+      setTimeout(function () {
+        el.style.opacity = 1;
+        el.style.transform = "scale(1)";
+      }, delay);
+    },
+    leave: function leave(el) {
+      el.style.opacity = 0;
+      el.style.transform = "scale(0)";
     }
   }
 });
@@ -47476,15 +47491,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", [
-    _c(
-      "div",
-      { staticClass: "row" },
-      _vm._l(_vm.products, function(product) {
-        return _c("product-card-component", { attrs: { product: product } })
-      })
-    )
-  ])
+  return _c(
+    "section",
+    [
+      _c(
+        "material-transition-group",
+        { staticClass: "row", attrs: { tag: "div" } },
+        _vm._l(_vm.products, function(product, index) {
+          return _c("product-card-component", {
+            key: product.id,
+            attrs: { "data-index": index, product: product }
+          })
+        })
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -47582,7 +47604,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-xs-12 col-sm-10 col-md-4" }, [
-    _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card mt-3" }, [
       _c("header", { staticClass: "bg-primary padding" }),
       _vm._v(" "),
       _c("div", { staticClass: "card-body padding" }, [
@@ -47616,6 +47638,97 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\animations\\MaterialCollectionComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-46985ee2", Component.options)
+  } else {
+    hotAPI.reload("data-v-46985ee2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  functional: true,
+  render: function render(createElement, context) {
+    var data = _extends({}, context.data, {
+      css: false,
+      on: {
+        beforeEnter: function beforeEnter(el) {
+          el.style.opacity = 0;
+          el.style.transform = "scale(0)";
+          el.style.transition = "all 0.5s cubic-bezier(0.4,0.0,0.2, 1)";
+        },
+        enter: function enter(el) {
+          var delay = 150 * el.dataset.index;
+          setTimeout(function () {
+            el.style.opacity = 1;
+            el.style.transform = "scale(1)";
+          }, delay);
+        },
+        leave: function leave(el) {
+          var delay = 150 * el.dataset.index;
+          setTimeout(function () {
+            el.style.opacity = 0;
+            el.style.transform = "scale(0)";
+          }, delay);
+        }
+      }
+    });
+
+    return createElement('transition-group', data, context.children);
+  }
+});
 
 /***/ })
 /******/ ]);

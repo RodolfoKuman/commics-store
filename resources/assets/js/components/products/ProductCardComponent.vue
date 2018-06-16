@@ -1,6 +1,6 @@
 <template lang="html">
   <div  class="col-xs-12 col-sm-10 col-md-4">
-    <div class="card">
+    <div class="card mt-3">
       <header class="bg-primary padding">
 
       </header>

@@ -1,9 +1,9 @@
 <template lang="html">
   <section>
-    <div class="row">
-      <product-card-component v-bind:product="product" v-for="product in products">
+    <material-transition-group tag="div" class="row">
+      <product-card-component :key="product.id" :data-index="index" v-bind:product="product" v-for="(product,index) in products">
       </product-card-component>
-    </div>
+    </material-transition-group>
   </section>
 </template>
 
@@ -27,6 +27,22 @@ export default {
           console.log(response.data.data);
           this.products = response.data.data;
         });
+      },
+      beforeEnter(el){
+        el.style.opacity = 0;
+        el.style.transform = "scale(0)";
+        el.style.transition = "all 0.5s cubic-bezier(0.4,0.0,0.2, 1)"
+      },
+      enter(el){
+        const delay = 150 * el.dataset.index;
+        setTimeout(()=>{
+          el.style.opacity = 1;
+          el.style.transform = "scale(1)";
+        },delay)
+      },
+      leave(el){
+        el.style.opacity = 0;
+        el.style.transform = "scale(0)";
       }
     }
   }
