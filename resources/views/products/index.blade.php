@@ -5,7 +5,7 @@
     <div class="">
       <products-component></products-component>
     </div>
-    
+
     <div class="actions text-center">
       {{$products->links()}}
     </div>

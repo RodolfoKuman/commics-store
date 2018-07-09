@@ -12,7 +12,10 @@
             <h4 class="card-subtitle">{{$product->price}}</h4>
             <p class="card-text">{{$product->description}}</p>
             <div class="card-actions">
-              <button class="btn btn-success" type="button" name="button">Agregar al carrito</button>
+              {!! Form::open(['method' => 'POST', 'url' => '/in_shopping_carts']) !!}
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <input type="submit" class="btn btn-success" name="" value="Agregar al carrito">
+              {!! Form::close() !!}
               @include('products.delete')
             </div>
           </div>
